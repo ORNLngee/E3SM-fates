@@ -1462,7 +1462,7 @@
     <NODENAME_REGEX>macbook-pro.local</NODENAME_REGEX>
     <OS>Darwin</OS>
     <COMPILERS>gnu</COMPILERS>
-    <MPILIBS>mpich,openmpi,mpi-serial</MPILIBS>
+    <MPILIBS>default,mpi-serial</MPILIBS>
     <CIME_OUTPUT_ROOT>$ENV{HOME}/project_e3sm/scratch</CIME_OUTPUT_ROOT>
     <DIN_LOC_ROOT>$ENV{HOME}/project_e3sm/pt-e3sm-inputdata</DIN_LOC_ROOT>
     <DIN_LOC_ROOT_CLMFORC>$ENV{HOME}/project_e3sm/pt-e3sm-inputdata/atm/datm7</DIN_LOC_ROOT_CLMFORC>
@@ -1479,13 +1479,7 @@
     <mpirun mpilib="mpi-serial">
       <executable> </executable>
     </mpirun>
-    <mpirun mpilib="mpich">
-      <executable>$ENV{MPI_ROOT}/bin/mpirun</executable>
-      <arguments>
-        <arg name="num_tasks"> -np $TOTALPES</arg>
-      </arguments>
-    </mpirun>
-    <mpirun mpilib="openmpi">
+    <mpirun mpilib="default">
       <executable>$ENV{MPI_ROOT}/bin/mpirun</executable>
       <arguments>
         <arg name="num_tasks"> -np $TOTALPES</arg>
@@ -1498,7 +1492,7 @@
       <env name="PATH">$ENV{PATH}</env>
     </environment_variables>       
 
-    <environment_variables>
+    <environment_variables mpilib="default">
       <!-- NOTE: the following $ENV{} must be available in your .bashrc, otherwise explicitly give the directories -->
       <env name="CC_ROOT">$ENV{CC_ROOT}</env>
       <env name="FC_ROOT">$ENV{FC_ROOT}</env>
@@ -1508,7 +1502,16 @@
       <env name="NETCDF_C_PATH">$ENV{NETCDF_C_PATH}</env>
       <env name="NETCDF_FORTRAN_PATH">$ENV{NETCDF_FORTRAN_PATH}</env>
       <env name="BLASLAPACK_LIBDIR">$ENV{BLASLAPACK_LIBDIR}</env>
-    </environment_variables>       
+    </environment_variables>
+    <environment_variables mpilib="mpi-serial">
+        <env name="CC_ROOT">$ENV{CC_ROOT}</env>
+        <env name="FC_ROOT">$ENV{FC_ROOT}</env>
+        <env name="HDF5_PATH">/usr/local/gcc-x/netcdf-4.x-hdf5-serial</env>
+        <env name="NETCDF_C_PATH">/usr/local/gcc-x/netcdf-4.x-hdf5-serial</env>
+        <env name="NETCDF_FORTRAN_PATH">/usr/local/gcc-x/netcdf-4.x-hdf5-serial</env>
+        <env name="BLASLAPACK_LIBDIR">$ENV{BLASLAPACK_LIBDIR}</env>
+    </environment_variables>
+
 
   </machine>
 
